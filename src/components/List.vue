@@ -3,9 +3,7 @@
     <h2>News List</h2>
     <ul>
       <li v-for="news in newsList">
-        <router-link :to="{ name: 'Detail', params: { id: news.id }}">
-          {{ news.title }}
-        </router-link>
+        <NewsLink :news="news"></NewsLink>
       </li>
     </ul>
   </div>
@@ -13,13 +11,21 @@
 
 <script>
 import News from '@/models/news';
+import NewsLink from '@/components/NewsLink';
 
 export default {
   name: 'list',
+  components: { NewsLink },
   data() {
     return {
-      newsList: News.getAll(),
+      newsList: null,
     };
+  },
+  created() {
+    News.getAll().then((newsEntities) => {
+      console.log(newsEntities[0].title);
+      this.newsList = newsEntities;
+    });
   },
 };
 </script>
