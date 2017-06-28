@@ -1,10 +1,11 @@
 <template>
   <div class="list-component">
-    <h2>News List</h2>
+    <h2>List</h2>
     <ul>
-      <li v-for="news in newsList">
+      <li v-for="news in newsList.list">
         <NewsLink :news="news"></NewsLink>
       </li>
+      <span href="" v-on:click="onInfinite">INFINITE</span>
     </ul>
   </div>
 </template>
@@ -16,16 +17,11 @@ import NewsLink from '@/components/NewsLink';
 export default {
   name: 'list',
   components: { NewsLink },
-  data() {
-    return {
-      newsList: null,
-    };
-  },
-  created() {
-    News.getAll().then((newsEntities) => {
-      console.log(newsEntities[0].title);
-      this.newsList = newsEntities;
-    });
+  props: ['newsList'],
+  methods: {
+    onInfinite() {
+      this.$emit('onScrolledBottom', this.newsList);
+    },
   },
 };
 </script>
