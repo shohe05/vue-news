@@ -3,5 +3,6 @@ export default class TabEntity {
     this.id = source.id;
     this.name = source.name;
     this.isActive = false;
+    this.currentPositionY = 0;
   }
 }

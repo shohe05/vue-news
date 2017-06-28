@@ -23,8 +23,6 @@ export default {
     };
   },
   updated() {
-    // alert("List updates");
-    console.log(this.newsList);
     this.nowLoading = false;
   },
   methods: {

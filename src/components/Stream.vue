@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       tabs: [],
+      activeTabId: 0,
       newsList: [],
       newsListContainer: [],
       swipeOptions: {
@@ -44,7 +45,6 @@ export default {
   created() {
     this.tabs = ApiConf.ENDPOINTS.map((endpoint, i) => { return new TabEntity({id: i, name: endpoint.name}); });
     this.initNewsListContainer().then((newsListContainers) => {
-      console.log(newsListContainers);
       this.newsListContainer = newsListContainers;
       this.activateTab(this.tabs[0]);
     });
@@ -67,13 +67,16 @@ export default {
       });
     },
     activateTab(tab) {
-      console.log('activate tab: ' + tab.name);
+      console.log(window.pageYOffset);
+      this.tabs[this.activeTabId].currentPositionY = window.pageYOffset;
+      this.activeTabId = tab.id;
+      console.log(tab.currentPositionY);
       for (let tab of this.tabs) {
         tab.isActive = false;
       }
       tab.isActive = true;
-      this.newsList = this.newsListContainer[tab.id];
-      this.$emit('onTabChange', tab.id);
+      this.newsList = this.newsListContainer[this.activeTabId];
+      this.$emit('onTabChange', this.activeTabId);
     },
     loadNextPage(newsListEntity) {
       News.getList(newsListEntity.endpoint).then((res) => {

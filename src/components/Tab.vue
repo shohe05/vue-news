@@ -11,6 +11,12 @@ export default {
   props: ['tab'],
   created() {
   },
+  updated() {
+    console.log(this.tab.name);
+    if (this.tab.isActive) {
+      window.scroll(0, this.tab.currentPositionY);
+    }
+  },
   methods: {
     onTabClicked() {
       this.$emit("onTabClicked");
