@@ -9,14 +9,9 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/stream',
+      path: '/',
       name: 'Stream',
       component: Stream,
-    },
-    {
-      path: '/',
-      name: 'List',
-      component: List,
     },
     {
       path: '/detail/:id',

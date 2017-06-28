@@ -1,7 +1,7 @@
 <template>
   <div class="news-link-component">
     <!--<img :src="news.thumnailUrl">-->
-    <h3>{{ news.headLine }}</h3>
+    <h3><a v-bind:href="news.newsLink">{{ news.headLine }}</a></h3>
   </div>
 </template>
 

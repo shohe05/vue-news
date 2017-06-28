@@ -1,7 +1,12 @@
 <template>
   <div class="stream-component">
-    <h2>Stream</h2>
-    <Tab v-for="tab in tabs" :tab="tab" :key="tab.id" @onTabClicked="activateTab(tab)"></Tab>
+    <!--<swipe :options="swipeOptions">-->
+      <!--<swipe-item>-->
+        <table class="tabs"><tr>
+        <Tab v-for="tab in tabs" :tab="tab" :key="tab.id" @onTabClicked="activateTab(tab)"></Tab>
+        </tr></table>
+      <!--</swipe-item>-->
+    <!--</swipe>-->
     <List :newsList="newsList" @onScrolledBottom="loadNextPage"></List>
   </div>
 </template>
@@ -13,18 +18,31 @@ import ApiConf from '@/models/api_conf';
 import TabEntity from '@/entities/tab_entity';
 import NewsListEntity from '@/entities/news_list_entity';
 import News from '@/models/news';
+import Swipe from 'vswipe';
+import SwipeItem from 'vswipe';
 
 export default {
   name: 'stream',
-  components: { Tab, List },
+  components: { Tab, List, Swipe, SwipeItem },
   data() {
     return {
       tabs: [],
       newsList: [],
       newsListContainer: [],
+      swipeOptions: {
+          startSlide: 0,
+          speed: 300,
+          auto: 4000,
+          continuous: true,
+          disableScroll: false,
+          stopPropagation: false,
+          callback: function (index, slide) { console.log('slide changes') },
+          transitionEnd: function (index, slide) { console.log('slide transition ends') }
+      },
     };
   },
   created() {
+    alert('Strem compoernen created');
     this.tabs = ApiConf.ENDPOINTS.map((endpoint, i) => { return new TabEntity({id: i, name: endpoint.name}); });
     this.initNewsListContainer().then((newsListContainers) => {
       console.log(newsListContainers);
@@ -61,7 +79,7 @@ export default {
     loadNextPage(newsListEntity) {
       News.getList(newsListEntity.endpoint).then((res) => {
         newsListEntity.list = newsListEntity.list.concat(res);
-        this.newsList = newsList;
+        this.newsList = newsListEntity;
       });
     },
   },
@@ -70,5 +88,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.tabs {
+  position: fixed;
+  z-index: 1000000000;
+}
 </style>

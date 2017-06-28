@@ -1,7 +1,7 @@
 <template>
-  <span class="tab-component" v-bind:class="{ active: tab.isActive }" v-on:click="onTabClicked">
+  <td class="tab-component" v-bind:class="{ active: tab.isActive }" v-on:click="onTabClicked">
     <span>{{ tab.name }}</span>
-  </span>
+  </td>
 </template>
 
 <script>
@@ -21,6 +21,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.tab-component {
+  background: black;
+  z-index: 10000;
+}
+.tab-component span {
+  color: white;
+}
 .active {
   background: red;
 }

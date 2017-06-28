@@ -1,6 +1,5 @@
 <template>
-  <div class="list-component">
-    <h2>List</h2>
+  <div class="list">
     <ul>
       <li v-for="news in newsList.list">
         <NewsLink :news="news"></NewsLink>
@@ -28,5 +27,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.list {
+  position: absolute;
+  top: 30px;
+  z-index: 1;
+}
 </style>
