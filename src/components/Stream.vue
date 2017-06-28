@@ -42,7 +42,6 @@ export default {
     };
   },
   created() {
-    alert('Strem compoernen created');
     this.tabs = ApiConf.ENDPOINTS.map((endpoint, i) => { return new TabEntity({id: i, name: endpoint.name}); });
     this.initNewsListContainer().then((newsListContainers) => {
       console.log(newsListContainers);

@@ -17,8 +17,22 @@ export default {
   name: 'list',
   components: { NewsLink },
   props: ['newsList'],
+  data() {
+    return {
+       nowLoading: false,
+    };
+  },
+  updated() {
+    // alert("List updates");
+    console.log(this.newsList);
+    this.nowLoading = false;
+  },
   methods: {
     onInfinite() {
+      if (this.nowLoading) {
+        return;
+      }
+      this.nowLoading = true;
       this.$emit('onScrolledBottom', this.newsList);
     },
   },
