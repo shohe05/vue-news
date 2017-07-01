@@ -1,12 +1,8 @@
 <template>
   <div class="stream-component">
-    <!--<swipe :options="swipeOptions">-->
-      <!--<swipe-item>-->
-        <table class="tabs"><tr>
-        <Tab v-for="tab in tabs" :tab="tab" :key="tab.id" @onTabClicked="activateTab(tab)"></Tab>
-        </tr></table>
-      <!--</swipe-item>-->
-    <!--</swipe>-->
+      <table class="tabs"><tr>
+      <Tab v-for="tab in tabs" :tab="tab" :key="tab.id" @onTabClicked="activateTab(tab)"></Tab>
+      </tr></table>
     <List :newsList="newsList" @onScrolledBottom="loadNextPage"></List>
   </div>
 </template>
@@ -30,16 +26,6 @@ export default {
       activeTabId: 0,
       newsList: [],
       newsListContainer: [],
-      swipeOptions: {
-          startSlide: 0,
-          speed: 300,
-          auto: 4000,
-          continuous: true,
-          disableScroll: false,
-          stopPropagation: false,
-          callback: function (index, slide) { console.log('slide changes') },
-          transitionEnd: function (index, slide) { console.log('slide transition ends') }
-      },
     };
   },
   created() {
@@ -67,16 +53,13 @@ export default {
       });
     },
     activateTab(tab) {
-      console.log(window.pageYOffset);
       this.tabs[this.activeTabId].currentPositionY = window.pageYOffset;
       this.activeTabId = tab.id;
-      console.log(tab.currentPositionY);
       for (let tab of this.tabs) {
         tab.isActive = false;
       }
       tab.isActive = true;
       this.newsList = this.newsListContainer[this.activeTabId];
-      this.$emit('onTabChange', this.activeTabId);
     },
     loadNextPage(newsListEntity) {
       News.getList(newsListEntity.endpoint).then((res) => {
